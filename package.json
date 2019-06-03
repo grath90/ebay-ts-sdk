@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "@types/request-promise": "^4.1.41",
+    "@types/xml2js": "^0.4.3",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "xml2js": "^0.4.19"
+  },
+  "name": "@grath/ebay-ts-sdk",
+  "description": "TypeScript sdk to work with ebay API calls",
+  "version": "1.0.1",
+  "main": "./build/index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grath90/ebay-ts-sdk.git"
+  },
+  "keywords": [
+    "ebay-api",
+    "typescript"
+  ],
+  "author": "Cole Rath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grath90/ebay-ts-sdk/issues"
+  },
+  "homepage": "https://github.com/grath90/ebay-ts-sdk#readme"
+}
