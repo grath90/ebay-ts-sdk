@@ -4,13 +4,8 @@ import {
   IGetAccountInterface,
 } from '../Interfaces';
 
-interface IParams {
-  apiType: string;
-  auth: IAuth;
-}
-
 class Trading extends Ebay {
-  constructor (options: IParams) {
+  constructor (options: { apiType: string, auth: IAuth }) {
     super({
       auth: options.auth,
       apiType: 'XML',
