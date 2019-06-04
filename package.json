@@ -8,7 +8,7 @@
   },
   "name": "@grath/ebay-ts-sdk",
   "description": "TypeScript sdk to work with ebay API calls",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "devDependencies": {
