@@ -6,6 +6,11 @@
  * actual data element values for xml
  */
 
+ interface CallParams {
+   callInfo: any,
+   callName: string,
+ }
+
 function assignParams(params: any): string {
   let body: string;
   body = '';
@@ -28,7 +33,7 @@ function assignParams(params: any): string {
   return body;
 }
 
-function generate(params: any): string {
+function generate(params: CallParams, token: string): string {
   let body: string;
   body = '';
 
@@ -37,7 +42,7 @@ function generate(params: any): string {
   return `<?xml version="1.0" encoding="utf-8"?>
   <${params.callName}Request xmlns="urn:ebay:apis:eBLBaseComponents">
     <RequesterCredentials>
-      <eBayAuthToken>${params.auth.token}</eBayAuthToken>
+      <eBayAuthToken>${token}</eBayAuthToken>
     </RequesterCredentials>
     ${body}
   </${params.callName}Request>

@@ -10,9 +10,16 @@
   "description": "TypeScript sdk to work with ebay API calls",
   "version": "1.0.2",
   "main": "./build/index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "ts-node": "^8.2.0",
+    "typescript": "^3.5.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 100000 -r ts-node/register 'test.ts'"
   },
   "repository": {
     "type": "git",
