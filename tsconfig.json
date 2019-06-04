@@ -12,6 +12,8 @@
         "noUnusedLocals": true,
         "outDir": "./build",
         "declaration": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
     },
     "include": [
       "ebay/**/*"
