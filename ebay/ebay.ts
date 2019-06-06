@@ -41,7 +41,6 @@ abstract class Ebay {
       
       return convertedResponse;
     } catch (e) {
-      console.log(e);
       throw e;
     }
   }
