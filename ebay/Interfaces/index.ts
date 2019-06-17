@@ -1,4 +1,5 @@
 import { IGetAccountInterface } from './TradingInterfaces';
+import { IFindItemsIneBayStores } from './FindingInterfaces';
 
 /** Interface for Authoriation needed for ebay API */
 interface IAuth { 
@@ -37,4 +38,5 @@ export {
   ICallParams,
   IAPICallParams,
   IGetAccountInterface,
+  IFindItemsIneBayStores,
 }
