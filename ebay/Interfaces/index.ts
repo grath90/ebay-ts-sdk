@@ -1,4 +1,5 @@
 import { IGetAccountInterface } from './TradingInterfaces';
+import { ICreateShippingFulfillment } from './FulfillmentInterfaces';
 
 /** Interface for Authoriation needed for ebay API */
 interface IAuth { 
@@ -29,6 +30,7 @@ interface IAPICallParams {
   body?: any,
   method: string,
   headers: any,
+  json?: boolean,
 }
 
 export {
@@ -37,4 +39,5 @@ export {
   ICallParams,
   IAPICallParams,
   IGetAccountInterface,
+  ICreateShippingFulfillment,
 }

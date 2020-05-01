@@ -57,6 +57,8 @@ abstract class Ebay {
     } else {
       if(this.apiType === DataTypes.json) {
         call.body = params.callInfo;
+        call.json = true;
+        call.headers.Authorization = `TOKEN ${this.auth.token}`;
       } else if(this.apiType === DataTypes.xml) {
         call.body = generate(params, this.auth.token);
       } else {
