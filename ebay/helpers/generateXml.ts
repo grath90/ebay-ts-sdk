@@ -49,4 +49,23 @@ function generate(params: CallParams, token: string): string {
   `;
 };
 
-export { generate }
+function generateBulkDataRequest(params: CallParams): string {
+  let body: string;
+  body = '';
+
+  body = assignParams(params.callInfo);
+
+  return `<?xml version="1.0" encoding="utf-8"?>
+  <BulkDataExchangeRequests>
+    <Header>
+      <SiteID>0</SiteID>
+      <Version>583</Version>
+    </Header>
+    <${params.callName}Request xmlns="urn:ebay:apis:eBLBaseComponents">
+    ${body}
+    </${params.callName}Request>
+  </BulkDataExchangeRequests>
+  `;
+}
+
+export { generate, generateBulkDataRequest }

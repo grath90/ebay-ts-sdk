@@ -1,7 +1,8 @@
-import { generate } from './generateXml';
+import { generate, generateBulkDataRequest } from './generateXml';
 import { generateQS } from './generateQueryString';
 
 export {
   generate,
-  generateQS
+  generateQS,
+  generateBulkDataRequest,
 };

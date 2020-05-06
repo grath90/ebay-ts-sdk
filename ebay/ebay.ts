@@ -1,5 +1,5 @@
 import * as request from 'request-promise';
-import { generate, generateQS } from './helpers';
+import { generate, generateQS, generateBulkDataRequest } from './helpers';
 import * as convert from 'xml2js';
 import { DataTypes } from './types';
 import {
@@ -11,7 +11,6 @@ import {
 
 abstract class Ebay {
   params: object;
-  headers: any;
   apiType: string;
   auth: IAuth;
 
@@ -19,21 +18,14 @@ abstract class Ebay {
     this.params = params;
     this.auth = params.auth
     this.apiType = params.apiType;
-    this.headers = {
-        'X-EBAY-API-COMPATIBILITY-LEVEL': 967,
-        'X-EBAY-API-DEV-NAME': this.auth.DevID,
-        'X-EBAY-API-APP-NAME': this.auth.AppID,
-        'X-EBAY-API-CERT-NAME': this.auth.CertID,
-        'X-EBAY-API-SITEID': 0,
-        'Content-Type': params.apiType === 'XML' ? 'text/xml' : 'application/json',
-    }
   }
 
-  async makeCall(params: ICallParams): Promise<object> {
+  async makeCall(params: ICallParams): Promise<any> {
     try {
-      this.headers['X-EBAY-API-CALL-NAME'] = params.callName;
-
       const call: IAPICallParams = this.buildCallParams(params);
+
+      // console.log(call);
+      // process.exit();
 
       const response = await request(call);
       
@@ -46,9 +38,10 @@ abstract class Ebay {
   }
 
   private buildCallParams(params: ICallParams): IAPICallParams {
+    const headers = this.buildHeaders(params);
     const call: IAPICallParams = { 
       url: params.url,
-      headers: this.headers,
+      headers,
       method: params.method,
     };
 
@@ -59,14 +52,39 @@ abstract class Ebay {
         call.body = params.callInfo;
         call.json = true;
         call.headers.Authorization = `TOKEN ${this.auth.token}`;
-      } else if(this.apiType === DataTypes.xml) {
+      } else if(this.apiType === DataTypes.xml && !params.bulkData) {
         call.body = generate(params, this.auth.token);
+      } else if (this.apiType === DataTypes.xml && params.bulkData) {
+        call.body = generateBulkDataRequest(params);
       } else {
         throw `apiType must be either ${DataTypes.json} or ${DataTypes.xml}`;
       }
     }
 
     return call;
+  }
+
+  private buildHeaders(params: ICallParams): object {
+    const headers = {
+      api: {
+        'X-EBAY-API-COMPATIBILITY-LEVEL': 967,
+        'X-EBAY-API-DEV-NAME': this.auth.DevID,
+        'X-EBAY-API-APP-NAME': this.auth.AppID,
+        'X-EBAY-API-CERT-NAME': this.auth.CertID,
+        'X-EBAY-API-SITEID': 0,
+        'X-EBAY-API-CALL-NAME': params.callName,
+        'Content-Type': this.apiType === 'XML' ? 'text/xml' : 'application/json',
+      },
+      bulkData: {
+        'CONTENT-TYPE': 'XML',
+        'X-EBAY-SOA-SECURITY-TOKEN': this.auth.token,
+        'X-EBAY-SOA-OPERATION-NAME': params.callName,
+        'X-EBAY-SOA-SERVICE-NAME': params.serviceName,
+        'X-EBAY-SOA-SERVICE-VERSION': '1.0.0',
+      }
+    }
+
+    return params.bulkData ? headers.bulkData : headers.api;
   }
 
   private parseResponse(response: any): object {
